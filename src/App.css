@@ -43,3 +43,12 @@
   background-size : cover;
   background-position : center;
 }
+
+.off {
+  opacity: 0;
+}
+
+.on {
+  opacity: 1;
+  transition: opacity 0.5s;
+}

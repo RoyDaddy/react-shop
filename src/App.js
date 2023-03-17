@@ -6,12 +6,14 @@ import Main from "./pages/Main";
 import Detail from "./pages/Detail";
 import About from "./pages/about/About";
 import Event from "./pages/event/About";
-import {useState} from "react";
+import {createContext, useState} from "react";
 import data from "./data";
+import Cart from "./pages/Cart";
 
 function App() {
     let navigate = useNavigate();
     let [shoesList, setShoesList] = useState(data);
+    let [quantity, setQuantity] = useState([10, 11, 12]);
 
     return (
         <div className="App">
@@ -20,6 +22,7 @@ function App() {
                     <Navbar.Brand onClick={() => navigate('/')}>Navbar</Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link onClick={() => navigate('/')}>Home</Nav.Link>
+                        <Nav.Link onClick={() => navigate('/cart')}>Cart</Nav.Link>
                         <Nav.Link onClick={() => navigate('/about')}>About</Nav.Link>
                         <Nav.Link onClick={() => navigate('/event')}>Event</Nav.Link>
                     </Nav>
@@ -27,8 +30,9 @@ function App() {
             </Navbar>
 
             <Routes>
-                <Route path="/" element={<Main shoesList={shoesList}/>} />
+                <Route path="/" element={<Main shoesList={shoesList} setShoesList={setShoesList}/>} />
                 <Route path="/detail/:id" element={<Detail shoesList={shoesList}/>} />
+                <Route path="/cart" element={<Cart/>} />
                 <Route path="/about" element={<About/>} >
                     <Route path="member" element={<>멤버임</>}/>
                     <Route path="location" element={<>지도임</>}/>
