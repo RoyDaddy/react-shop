@@ -6,11 +6,16 @@ import Main from "./pages/Main";
 import Detail from "./pages/Detail";
 import About from "./pages/about/About";
 import Event from "./pages/event/About";
-import {createContext, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import data from "./data";
 import Cart from "./pages/Cart";
+import axios from "axios";
+import {useQuery} from "@tanstack/react-query";
 
 function App() {
+    useEffect(() => {
+        localStorage.setItem('watched', JSON.stringify([]));
+    }, []);
     let navigate = useNavigate();
     let [shoesList, setShoesList] = useState(data);
     let [quantity, setQuantity] = useState([10, 11, 12]);
@@ -25,6 +30,9 @@ function App() {
                         <Nav.Link onClick={() => navigate('/cart')}>Cart</Nav.Link>
                         <Nav.Link onClick={() => navigate('/about')}>About</Nav.Link>
                         <Nav.Link onClick={() => navigate('/event')}>Event</Nav.Link>
+                    </Nav>
+                    <Nav className="ms-auto">
+                        반가워요
                     </Nav>
                 </Container>
             </Navbar>

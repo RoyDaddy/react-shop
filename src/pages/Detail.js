@@ -2,6 +2,8 @@ import {useParams} from "react-router-dom";
 import styled from "styled-components";
 import {useEffect, useState} from "react";
 import {FormText, Nav} from "react-bootstrap";
+import {useDispatch} from "react-redux";
+import {addCartList, setCartList} from "../store/store";
 
 let Box = styled.div`
   padding : 20px;
@@ -19,8 +21,16 @@ function Detail(props) {
     let [number, setNumber] = useState(true);
     let [tab, setTab] = useState(0);
     let [fade, setFade] = useState(0);
+    let dispatch = useDispatch();
+    let {id} = useParams();
 
     useEffect(() => {
+        let watched = JSON.parse(localStorage.getItem('watched'));
+        if(!watched.includes(id)){
+            watched.push(id);
+            localStorage.setItem('watched', JSON.stringify(watched));
+        }
+
         let timer1 = setTimeout(() => setDiscount(!isDiscount), 2000);
         setFade('on');
 
@@ -29,7 +39,6 @@ function Detail(props) {
         }
     }, []);
 
-    let {id} = useParams();
     let el = props.shoesList.find(function(el){
         return el.id == id
     });
@@ -52,7 +61,7 @@ function Detail(props) {
                     <h4 className="pt-5">{el.title}</h4>
                     <p>{el.content}</p>
                     <p>{el.price.toLocaleString('en')}원</p>
-                    <button className="btn btn-danger">주문하기</button>
+                    <button className="btn btn-danger" onClick={() => {dispatch(addCartList({id: el.id, name: el.title}))}}>카드담기</button>
                 </div>
             </div>
 
